@@ -170,6 +170,12 @@ public class Game {
                     .orElse(null);
 
             if (targetBox != null) {
+                if (targetBox.getHiddenOccupant() != null) {
+                    System.out.println("Result: As you open the box, a monstrous presence emerges!");
+                    endGame(false, "You opened the box that hid the Box Girl. She caught you immediately.");
+                    return;
+                }
+
                 Item content = targetBox.open();
 
                 if (content == null || content.getName().equals("Empty Box")) {
@@ -220,8 +226,8 @@ public class Game {
      * Checks the game state for immediate failure conditions (encountering Box Girl).
      */
     private void checkGameState() {
-        if (player.getCurrentRoom().equals(boxGirl.getCurrentRoom())) {
-            System.out.println("\n CAUGHT!!! The Box Girl is in the room with you!");
+        if (player.getCurrentRoom().equals(boxGirl.getCurrentRoom()) && boxGirl.getHiddenInBox() == null) {
+            System.out.println("\n CAUGHT!!! The Box Girl is in the room with you and reveals herself!");
             endGame(false, "You failed to escape the Box Girl's pursuit.");
         }
     }

@@ -6,6 +6,7 @@ public class BoxGirl {
     private Room currentRoom;
     private List<Manuscript> unlockedSkills;
     private Random random = new Random();
+    private Box hiddenInBox = null;
 
     /**
      * Constructs a new BoxGirl.
@@ -34,16 +35,39 @@ public class BoxGirl {
             this.activateSkill(skill.getSkillName(), player, game);
         }
 
-        this.randomMove();
+    this.randomMove(game);
     }
 
     /**
      * Moves the Box Girl to a random adjacent room.
      */
-    public void randomMove() {
+    /**
+     * Moves the Box Girl to a random adjacent room. She may choose to hide in an unopened box in the destination.
+     */
+    public void randomMove(Game game) {
+        if (this.hiddenInBox != null) {
+            this.hiddenInBox.clearHiddenOccupant();
+            this.hiddenInBox = null;
+        }
+
         List<Room> possibleMoves = new ArrayList<>(currentRoom.getConnections().values());
-        if (!possibleMoves.isEmpty()) {
-            this.currentRoom = possibleMoves.get(random.nextInt(possibleMoves.size()));
+        if (possibleMoves.isEmpty()) return;
+
+        Room dest = possibleMoves.get(random.nextInt(possibleMoves.size()));
+        this.currentRoom = dest;
+
+        if (random.nextDouble() < 0.4) {
+            List<Box> unopened = new ArrayList<>();
+            for (Box b : dest.getBoxes()) {
+                if (!b.isOpen() && b.getHiddenOccupant() == null) unopened.add(b);
+            }
+
+            if (!unopened.isEmpty()) {
+                Box chosen = unopened.get(random.nextInt(unopened.size()));
+                chosen.setHiddenOccupant(this);
+                this.hiddenInBox = chosen;
+                System.out.println("You sense nothing unusual... but something might be hiding nearby.");
+            }
         }
     }
 
@@ -112,6 +136,11 @@ public class BoxGirl {
     public Room getCurrentRoom() {
         return currentRoom;
     }
+
+    /**
+     * @return The box the BoxGirl is currently hiding in, or null if visible.
+     */
+    public Box getHiddenInBox() { return hiddenInBox; }
 
     /**
      * Unlocks a new skill for the Box Girl based on the collected manuscript.

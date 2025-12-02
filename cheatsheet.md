@@ -1,12 +1,9 @@
-This cheatsheet lists the playable commands, important item types, and the spoiler section describing victory conditions and special rooms.
+This cheatsheet lists the commands for players, important item types, and victory conditions and special rooms.
 
-Tip: You can implement a `HELP` or `CHEATSHEET` in-game command to print this content during play.
 
----
+1. Commands for Players
 
-# Controls & Commands
-
-All player input is case-insensitive. Enter one of the commands below on your turn.
+Enter one of the commands below on your turn.
 
 - move
 	- Description: Move to a connected room.
@@ -29,9 +26,8 @@ All player input is case-insensitive. Enter one of the commands below on your tu
 	- Description: Prints the current room name immediately.
 	- Usage: Type `whereami` on your turn.
 
----
 
-# Inventory & Item types (what they do)
+2. Inventory & Item types (what they do)
 
 - Password (class: `Password`)
 	- Purpose: Pieces of a code needed to open the Hidden Exit.
@@ -43,18 +39,17 @@ All player input is case-insensitive. Enter one of the commands below on your tu
 
 - Counter Item (class: `CounterItem`)
 	- Purpose: A consumable that temporarily wards off or frightens the Box Girl.
-	- How to use: `use item` → the item is removed from inventory, sets a short deterrent state, and if Box Girl shares your room she will be forced to move.
+	- How to use: `use item` → the item is removed from inventory, sets a short deterrent state, and if Box Girl shares your room, she will be forced to move.
 
 - Manuscript (class: `Manuscript`)
 	- Purpose: Unlocks skills for the Box Girl when found/opened; cannot be used by the player.
 	- Behavior: Opening a box with a Manuscript auto-activates the corresponding skill, which may immediately affect boxes, movement, or cause the Box Girl to act.
 
 - Empty Box marker
-	- Purpose: Represents boxes with no useful item. Opening shows "This box is empty.".
+	- Purpose: Represents boxes with no useful items. The opening shows, "This box is empty."
 
----
 
-# Room & Map notes
+3. Room & Map notes
 
 - Rooms have features (stored in `featureItem`) such as:
 	- "Carved door (Miss Mary's Location)" — a hint for Miss Mary's location
@@ -63,11 +58,10 @@ All player input is case-insensitive. Enter one of the commands below on your tu
 
 - Movement directions are the connection keys in each room (`NORTH`, `SOUTH`, `EAST`, `WEST`, `UP`, `DOWN`, `BASEMENT`, `UPPER`, etc.).
 
----
 
-# Spoilers — Victory conditions and tips
+4. Victory conditions and tips
 
-SPOILER SECTION: contains explicit win conditions. Skip if you want to find them during play.
+There are two ways to win the game:
 
 1) ESCAPE VICTORY
 	 - Requirement: Collect 3 `Password` items and be at the Hidden Exit room (the room whose feature contains "Hidden Exit").
@@ -77,26 +71,11 @@ SPOILER SECTION: contains explicit win conditions. Skip if you want to find them
 	 - Requirement: Collect at least 2 `BoxGirlWeakness` items and be in a special room (Miss Mary's room or the Corpse location).
 	 - How to trigger: Use a `BoxGirlWeakness` while in a room where `room.getName()` contains "Miss Mary" or "Corpse". The `BoxGirlWeakness.use()` method performs exactly this check.
 
-Additional notes / tips:
-- The `whereami` command helps you confirm you are standing in the correct room to attempt a victory action.
-- Manuscripts cannot be used to win — they power the Box Girl and may make the game harder.
-- Counter items are valuable for escaping immediate danger: they remove themselves from inventory and can force the Box Girl to move if she is in the same room.
-- If the Box Girl steals a weakness, the game attempts to hide it back in a random unopened empty box (see Game.addItemToRandomBox).
 
----
-
-# Example play session (short)
+5. Example play session (short)
 
 1) Game prints starting room: "You are currently in the First Floor Hall."
 2) Player types: `whereami` → prints current room immediately.
 3) Player types: `move` then `NORTH` → player moves rooms.
 4) Player types: `open box` → chooses a box ID and may receive an item.
 5) Player types: `use item` → chooses `Matches` (CounterItem) to ward off the Box Girl.
-
----
-
-If you want, I can also:
-- Add an in-game `HELP` command that prints an abbreviated version of this cheatsheet.
-- Save this cheatsheet into `docs/` or render it into README with an embedded diagram.
-
-Enjoy the game!

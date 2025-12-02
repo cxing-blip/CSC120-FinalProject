@@ -3,6 +3,7 @@ public class Box {
     private int id;
     private boolean isOpen = false;
     private Item content;
+    private BoxGirl hiddenOccupant = null;
 
     /**
      * Constructs a new box with a unique ID.
@@ -25,6 +26,21 @@ public class Box {
     }
 
     /**
+     * @return The BoxGirl hiding in this box, or null if none.
+     */
+    public BoxGirl getHiddenOccupant() { return hiddenOccupant; }
+
+    /**
+     * Set the BoxGirl as hiding inside this box.
+     */
+    public void setHiddenOccupant(BoxGirl bg) { this.hiddenOccupant = bg; }
+
+    /**
+     * Clear any BoxGirl hiding in this box.
+     */
+    public void clearHiddenOccupant() { this.hiddenOccupant = null; }
+
+    /**
      * Sets the content of the box. Used during map generation and the 'Moving Around' skill.
      * @param content The item to place inside the box.
      */
@@ -36,6 +52,8 @@ public class Box {
      * Closes the box. Used by the Box Girl's 'Moving Around' skill.
      */
     public void close() {
+        if (this.hiddenOccupant != null) return;
+
         if (this.content == null || !this.content.getName().equals("Empty Box")) {
             this.isOpen = false;
         }
