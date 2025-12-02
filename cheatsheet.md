@@ -1,8 +1,102 @@
-This file will contain documentation for all commands available in your game.
+This cheatsheet lists the playable commands, important item types, and the spoiler section describing victory conditions and special rooms.
 
-Note:  It's a good idea to also make this list available inside the game, in response to a `HELP` command.
+Tip: You can implement a `HELP` or `CHEATSHEET` in-game command to print this content during play.
 
+---
 
-# SPOILER ALERT
+# Controls & Commands
 
-If your game includes challenges that must be overcome to win, also list them below.
+All player input is case-insensitive. Enter one of the commands below on your turn.
+
+- move
+	- Description: Move to a connected room.
+	- Usage: Type `move` then enter a direction when prompted (e.g. `NORTH`, `SOUTH`, `UP`, `DOWN`, `BASEMENT`, `UPPER`).
+	- Example:
+		- move
+		- NORTH
+
+- open box
+	- Description: Open an unopened box in the current room.
+	- Usage: Type `open box`, see the list of unopened box IDs, then enter the numeric ID to open.
+	- Notes: Some boxes contain Items (Passwords, Weaknesses, Manuscripts, CounterItems). Manuscripts auto-activate the Box Girl's skill.
+
+- use item
+	- Description: Use an item from your inventory.
+	- Usage: Type `use item`, the game lists your inventory, then enter the name of the item to use (e.g., `Matches`, `Password-A`).
+	- Behavior: Each item has a class-defined `use()` behavior. Some uses may end the game (victory), move the Box Girl, or alter the map.
+
+- whereami
+	- Description: Prints the current room name immediately.
+	- Usage: Type `whereami` on your turn.
+
+---
+
+# Inventory & Item types (what they do)
+
+- Password (class: `Password`)
+	- Purpose: Pieces of a code needed to open the Hidden Exit.
+	- How to use: `use item` → enter password name (or one password instance). If you have 3 Passwords and you are in the Hidden Exit room, using a Password triggers ESCAPE victory.
+
+- Box Girl Weakness (class: `BoxGirlWeakness`)
+	- Purpose: Items used to exorcise the Box Girl.
+	- How to use: `use item` → if you have at least 2 weaknesses and are in Miss Mary's Room or the Corpse Location, using one will trigger EXORCISM victory.
+
+- Counter Item (class: `CounterItem`)
+	- Purpose: A consumable that temporarily wards off or frightens the Box Girl.
+	- How to use: `use item` → the item is removed from inventory, sets a short deterrent state, and if Box Girl shares your room she will be forced to move.
+
+- Manuscript (class: `Manuscript`)
+	- Purpose: Unlocks skills for the Box Girl when found/opened; cannot be used by the player.
+	- Behavior: Opening a box with a Manuscript auto-activates the corresponding skill, which may immediately affect boxes, movement, or cause the Box Girl to act.
+
+- Empty Box marker
+	- Purpose: Represents boxes with no useful item. Opening shows "This box is empty.".
+
+---
+
+# Room & Map notes
+
+- Rooms have features (stored in `featureItem`) such as:
+	- "Carved door (Miss Mary's Location)" — a hint for Miss Mary's location
+	- "Seeping Walls (Corpse Location)" — a hint for the Corpse location
+	- "Rocking Chair (Hidden Exit)" — is used to identify the Hidden Exit room
+
+- Movement directions are the connection keys in each room (`NORTH`, `SOUTH`, `EAST`, `WEST`, `UP`, `DOWN`, `BASEMENT`, `UPPER`, etc.).
+
+---
+
+# Spoilers — Victory conditions and tips
+
+SPOILER SECTION: contains explicit win conditions. Skip if you want to find them during play.
+
+1) ESCAPE VICTORY
+	 - Requirement: Collect 3 `Password` items and be at the Hidden Exit room (the room whose feature contains "Hidden Exit").
+	 - How to trigger: Use a `Password` while in that room. The `Password.use()` method checks `player.countItemOfType(Password.class)` and `player.getCurrentRoom().getFeatureItem().contains("Hidden Exit")`.
+
+2) EXORCISM VICTORY
+	 - Requirement: Collect at least 2 `BoxGirlWeakness` items and be in a special room (Miss Mary's room or the Corpse location).
+	 - How to trigger: Use a `BoxGirlWeakness` while in a room where `room.getName()` contains "Miss Mary" or "Corpse". The `BoxGirlWeakness.use()` method performs exactly this check.
+
+Additional notes / tips:
+- The `whereami` command helps you confirm you are standing in the correct room to attempt a victory action.
+- Manuscripts cannot be used to win — they power the Box Girl and may make the game harder.
+- Counter items are valuable for escaping immediate danger: they remove themselves from inventory and can force the Box Girl to move if she is in the same room.
+- If the Box Girl steals a weakness, the game attempts to hide it back in a random unopened empty box (see Game.addItemToRandomBox).
+
+---
+
+# Example play session (short)
+
+1) Game prints starting room: "You are currently in the First Floor Hall."
+2) Player types: `whereami` → prints current room immediately.
+3) Player types: `move` then `NORTH` → player moves rooms.
+4) Player types: `open box` → chooses a box ID and may receive an item.
+5) Player types: `use item` → chooses `Matches` (CounterItem) to ward off the Box Girl.
+
+---
+
+If you want, I can also:
+- Add an in-game `HELP` command that prints an abbreviated version of this cheatsheet.
+- Save this cheatsheet into `docs/` or render it into README with an embedded diagram.
+
+Enjoy the game!

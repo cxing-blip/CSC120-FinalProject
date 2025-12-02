@@ -1,7 +1,3 @@
-/**
- * Represents an item that serves as a weakness of the Box Girl,
- * used for the Exorcism Victory condition.
- */
 public class BoxGirlWeakness extends Item {
 
     /**
@@ -29,9 +25,9 @@ public class BoxGirlWeakness extends Item {
         if (!roomName.contains("Miss Mary") && !roomName.contains("Corpse")) {
             return "You are not in the correct room for exorcism. Find the source of her resentment (Miss Mary's/Corpse Room).";
         }
-            
-        game.endGame(true, "\nYou successfully gathered the weaknesses and used them on the Box Girl! She vanished with a terrifying scream. You achieved [EXORCISM VICTORY].");
+
+        game.endGame(true, "\n You successfully gathered the weaknesses and used them on the Box Girl! She vanished with a terrifying scream. You achieved [EXORCISM VICTORY].");
             return "Exorcism successful! Game Over.";
-        
+
     }
 }

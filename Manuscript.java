@@ -1,7 +1,3 @@
-/**
- * Represents a Manuscript that unlocks a new skill for the Box Girl.
- * Cannot be used directly by the player.
- */
 public class Manuscript extends Item {
     private String skillName;
 
@@ -36,5 +32,7 @@ public class Manuscript extends Item {
     /**
      * @return The name of the skill unlocked by this manuscript.
      */
-    public String getSkillName() { return skillName; }
+    public String getSkillName() {
+        return skillName;
+    }
 }

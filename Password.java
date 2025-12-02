@@ -1,6 +1,3 @@
-/**
- * Represents a piece of the password needed for the Escape Victory condition.
- */
 public class Password extends Item {
 
     /**

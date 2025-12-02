@@ -1,6 +1,3 @@
-/**
- * Represents a container in a room that may hold an item.
- */
 public class Box {
     private static int nextId = 1;
     private int id;
@@ -47,15 +44,21 @@ public class Box {
     /**
      * @return The unique ID of the box.
      */
-    public int getId() { return id; }
+    public int getId() {
+        return id;
+    }
 
     /**
      * @return True if the box has been opened.
      */
-    public boolean isOpen() { return isOpen; }
+    public boolean isOpen() {
+        return isOpen;
+    }
 
     /**
      * @return The item content of the box.
      */
-    public Item getContent() { return content; }
+    public Item getContent() {
+        return content;
+    }
 }

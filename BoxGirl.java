@@ -2,9 +2,6 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Represents the Box Girl antagonist, managing her location, skills, and passive triggers.
- */
 public class BoxGirl {
     private Room currentRoom;
     private List<Manuscript> unlockedSkills;
@@ -27,13 +24,13 @@ public class BoxGirl {
     public void checkPassiveTriggers(Player player, Game game) {
         if (player.isJustUsedCounterItem()) {
             player.setJustUsedCounterItem(false);
-            System.out.println("【Calm Environment】The item you used temporarily deterred the evil presence.");
+            System.out.println(" CALM ENVIRONMENT! The item you used temporarily deterred the evil presence.");
             return;
         }
 
         if (!unlockedSkills.isEmpty() && random.nextDouble() < 0.3) {
             Manuscript skill = unlockedSkills.get(random.nextInt(unlockedSkills.size()));
-            System.out.println("\n【!!!!】Resentment explodes around you! **" + skill.getName() + "** is activated!");
+            System.out.println("\n !!!! Resentment explodes around you! " + skill.getName() + " is activated!");
             this.activateSkill(skill.getSkillName(), player, game);
         }
 
@@ -76,7 +73,7 @@ public class BoxGirl {
                         );
 
                 if (targetBox != null) {
-                    System.out.println("Your body moves against your will to open **Box " + targetBox.getId() + "**!");
+                    System.out.println("Your body moves against your will to open Box " + targetBox.getId() + "!");
                     Item content = targetBox.open();
                     if (content != null) {
                         System.out.println("You found: " + content.getName());
@@ -112,7 +109,9 @@ public class BoxGirl {
     /**
      * @return The Box Girl's current room.
      */
-    public Room getCurrentRoom() { return currentRoom; }
+    public Room getCurrentRoom() {
+        return currentRoom;
+    }
 
     /**
      * Unlocks a new skill for the Box Girl based on the collected manuscript.

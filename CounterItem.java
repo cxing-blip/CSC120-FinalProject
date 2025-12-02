@@ -1,7 +1,3 @@
-/**
- * Represents an item used to temporarily stop or ward off the Box Girl.
- * Consumed upon use.
- */
 public class CounterItem extends Item {
 
     /**

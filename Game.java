@@ -3,10 +3,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * The main class for the Box Girl interactive text game.
- * Manages game loop, initialization, and player interaction logic.
- */
 public class Game {
     private Player player;
     private GameMap map;
@@ -27,8 +23,8 @@ public class Game {
     public void start() {
         initializeGame();
 
-        // --- Game Background and Goal ---
-        System.out.println("--- Welcome to THE BOX GIRL ---");
+        // Game Background and Goal
+        System.out.println("Welcome to THE BOX GIRL");
         System.out.println("BACKGROUND: You have been trapped inside a haunted Japanese mansion by the 'Box Girl', a monstrous entity concealed within a box.");
         System.out.println("GOAL: Escape before she catches you. You can achieve victory in one of two ways:");
         System.out.println("  1. ESCAPE: Find 3 Passwords and use them at the Hidden Exit location.");
@@ -44,9 +40,13 @@ public class Game {
             checkGameState();
         }
 
-        System.out.println("\n--- Game Over ---");
+        System.out.println("\n GAME OVER");
     }
 
+    /**
+     * Initializes all game components: generates the map, defines and distributes all items,
+     * creates the Player, and initializes the BoxGirl's starting position.
+     */
     private void initializeGame() {
         map = new GameMap();
         map.generateRandomMap();
@@ -97,7 +97,7 @@ public class Game {
     private void playerTurn() {
         player.getCurrentRoom().describe();
 
-        System.out.println("\n--- Your Turn ---");
+        System.out.println("\n YOUR TURN");
         System.out.println("Choose action: [move] / [open box] / [use item] / [whereami]");
         String action = scanner.nextLine().toLowerCase().trim();
 
@@ -119,7 +119,9 @@ public class Game {
                 break;
         }
     }
-
+    /**
+     * Handles the player's movement command.
+     */
     private void handleMove() {
         Room current = player.getCurrentRoom();
 
@@ -135,6 +137,9 @@ public class Game {
         }
     }
 
+    /**
+     * Handles the player's action of opening a box in the current room.
+     */
     private void handleOpenBox() {
         List<Box> boxes = player.getCurrentRoom().getBoxes();
         List<Box> unopenedBoxes = new ArrayList<>();
@@ -153,6 +158,9 @@ public class Game {
             return;
         }
 
+        /**
+         * Handles the player's action of using an item from their inventory.
+         */
         System.out.println("Enter the ID of the box to open:");
         try {
             int boxId = Integer.parseInt(scanner.nextLine().trim());
@@ -167,7 +175,7 @@ public class Game {
                 if (content == null || content.getName().equals("Empty Box")) {
                     System.out.println("Result: The box is empty.");
                 } else if (content instanceof Manuscript) {
-                    System.out.println("Result: 【Resentment Burst】A " + content.getName() + " was found and activated the Box Girl's power.");
+                    System.out.println("Result: RESENTMENT BURST. A " + content.getName() + " was found and activated the Box Girl's power.");
                     ((Manuscript) content).activateSkill(this);
                 } else {
                     player.addItem(content);
@@ -180,6 +188,9 @@ public class Game {
         }
     }
 
+    /**
+     * Handles the player's action of using an item from their inventory.
+     */
     private void handleUseItem() {
         List<Item> inventory = player.getInventory();
         if (inventory.isEmpty()) {
@@ -187,7 +198,7 @@ public class Game {
             return;
         }
 
-        System.out.println("--- Your Items ---");
+        System.out.println("YOUR ITEMS：");
         for (int i = 0; i < inventory.size(); i++) {
             System.out.println((i + 1) + ". " + inventory.get(i).getName());
         }
@@ -210,7 +221,7 @@ public class Game {
      */
     private void checkGameState() {
         if (player.getCurrentRoom().equals(boxGirl.getCurrentRoom())) {
-            System.out.println("\n【CAUGHT!】The Box Girl is in the room with you!");
+            System.out.println("\n CAUGHT!!! The Box Girl is in the room with you!");
             endGame(false, "You failed to escape the Box Girl's pursuit.");
         }
     }
@@ -222,10 +233,10 @@ public class Game {
      */
     public void endGame(boolean win, String message) {
         isGameOver = true;
-        System.out.println("==========================================");
+        System.out.println("-------------------------------------------");
         System.out.println(win ? "VICTORY ACHIEVED!" : "FAILURE!");
         System.out.println(message);
-        System.out.println("==========================================");
+        System.out.println("-------------------------------------------");
     }
 
     /**
@@ -264,10 +275,14 @@ public class Game {
     /**
      * @return The Map instance.
      */
-    public GameMap getMap() { return map; }
+    public GameMap getMap() {
+        return map;
+    }
 
     /**
      * @return The BoxGirl instance.
      */
-    public BoxGirl getBoxGirl() { return boxGirl; }
+    public BoxGirl getBoxGirl() {
+        return boxGirl;
+    }
 }

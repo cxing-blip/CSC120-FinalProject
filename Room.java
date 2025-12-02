@@ -4,9 +4,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 
-/**
- * Represents a location in the mansion with specific coordinates, features, boxes, and connections.
- */
 public class Room {
     private String name;
     private int x, y;
@@ -37,7 +34,7 @@ public class Room {
      * Prints the current state and available exits of the room to the console.
      */
     public void describe() {
-        System.out.println("\n** Current Room: " + name + " **");
+        System.out.println("\nCurrent Room: " + name);
         System.out.println("Room Feature: " + featureItem);
 
         System.out.print("Room Exits (Direction -> Room Name): ");
@@ -89,32 +86,44 @@ public class Room {
      * @param direction The direction of the connection (e.g., NORTH, UP).
      * @param room The adjacent Room object.
      */
-    public void addConnection(String direction, Room room) { connections.put(direction, room); }
+    public void addConnection(String direction, Room room) {
+        connections.put(direction, room);
+    }
 
     /**
      * Retrieves the room connected in the specified direction.
      * @param direction The direction to check.
      * @return The connected Room, or null if no connection exists.
      */
-    public Room getNeighbor(String direction) { return connections.get(direction); }
+    public Room getNeighbor(String direction) {
+        return connections.get(direction);
+    }
 
     /**
      * @return The list of boxes in the room.
      */
-    public List<Box> getBoxes() { return boxes; }
+    public List<Box> getBoxes() {
+        return boxes;
+    }
 
     /**
      * @return The map of connections (Direction -> Room).
      */
-    public Map<String, Room> getConnections() { return connections; }
+    public Map<String, Room> getConnections() {
+        return connections;
+    }
 
     /**
      * @return The name of the feature item/location.
      */
-    public String getFeatureItem() { return featureItem; }
+    public String getFeatureItem() {
+        return featureItem;
+    }
 
     /**
      * @return The name of the room.
      */
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 }

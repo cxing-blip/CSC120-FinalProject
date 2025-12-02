@@ -1,6 +1,3 @@
-/**
- * Abstract base class for all items in the game.
- */
 public abstract class Item {
     private String name;
     private String description;
@@ -27,21 +24,29 @@ public abstract class Item {
     /**
      * @return The name of the item.
      */
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
     /**
      * @return The description of the item.
      */
-    public String getDescription() { return description; }
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * @return True if the item is currently in the player's inventory.
      */
-    public boolean isObtained() { return isObtained; }
+    public boolean isObtained() {
+        return isObtained;
+    }
 
     /**
      * Sets the obtained status of the item.
      * @param obtained The new status.
      */
-    public void setObtained(boolean obtained) { this.isObtained = obtained; }
+    public void setObtained(boolean obtained) {
+        this.isObtained = obtained;
+    }
 }
