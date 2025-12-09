@@ -22,9 +22,6 @@ Enter one of the commands below on your turn.
 	- Usage: Type `use item`, the game lists your inventory, then enter the name of the item to use (e.g., `Matches`, `Password-A`).
 	- Behavior: Each item has a class-defined `use()` behavior. Some uses may end the game (victory), move the Box Girl, or alter the map.
 
-- whereami
-	- Description: Prints the current room name immediately.
-	- Usage: Type `whereami` on your turn.
 
 
 2. Inventory & Item types (what they do)
@@ -75,7 +72,6 @@ There are two ways to win the game:
 5. Example play session (short)
 
 1) Game prints starting room: "You are currently in the First Floor Hall."
-2) Player types: `whereami` → prints current room immediately.
-3) Player types: `move` then `NORTH` → player moves rooms.
-4) Player types: `open box` → chooses a box ID and may receive an item.
-5) Player types: `use item` → chooses `Matches` (CounterItem) to ward off the Box Girl.
+2) Player types: `move` then `NORTH` → player moves rooms.
+3) Player types: `open box` → chooses a box ID and may receive an item.
+4) Player types: `use item` → chooses `Matches` (CounterItem) to ward off the Box Girl.

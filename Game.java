@@ -98,7 +98,7 @@ public class Game {
         player.getCurrentRoom().describe();
 
         System.out.println("\n YOUR TURN");
-        System.out.println("Choose action: [move] / [open box] / [use item] / [whereami]");
+        System.out.println("Choose action: [move] / [open box] / [use item]");
         String action = scanner.nextLine().toLowerCase().trim();
 
         switch (action) {
@@ -110,9 +110,6 @@ public class Game {
                 break;
             case "use item":
                 handleUseItem();
-                break;
-            case "whereami":
-                System.out.println("You are currently in the " + player.getCurrentRoom().getName() + ".");
                 break;
             default:
                 System.out.println("Action failed: Invalid command. Turn lost.");
