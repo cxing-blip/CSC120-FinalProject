@@ -37,7 +37,6 @@ public class Game {
             if (isGameOver) break;
 
             boxGirl.checkPassiveTriggers(player, this);
-            checkGameState();
         }
 
         System.out.println("\n GAME OVER");
@@ -87,8 +86,9 @@ public class Game {
         map.distributeItems(allItems);
 
         Room startRoom = map.getRoom("First Floor Hall");
+        Box startBox = map.getRoom("Basement").getBoxes().get(0);
         player = new Player(startRoom, this);
-        boxGirl = new BoxGirl(map.getRoom("Basement"));
+        boxGirl = new BoxGirl(map.getRoom("Basement"), startBox);
     }
 
     /**
@@ -216,16 +216,6 @@ public class Game {
             System.out.println("Result: " + result);
         } else {
             System.out.println("Action failed: You do not have that item.");
-        }
-    }
-
-    /**
-     * Checks the game state for immediate failure conditions (encountering Box Girl).
-     */
-    private void checkGameState() {
-        if (player.getCurrentRoom().equals(boxGirl.getCurrentRoom()) && boxGirl.getHiddenInBox() == null) {
-            System.out.println("\n CAUGHT!!! The Box Girl is in the room with you and reveals herself!");
-            endGame(false, "You failed to escape the Box Girl's pursuit.");
         }
     }
 

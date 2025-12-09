@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class Player {
     private Room currentRoom;
     private List<Item> inventory;
-    private boolean justUsedCounterItem = false;
     private Game game;
 
     /**
@@ -64,21 +63,6 @@ public class Player {
      */
     public List<Item> getInventory() {
         return inventory;
-    }
-
-    /**
-     * @return True if a counter item was just used this turn.
-     */
-    public boolean isJustUsedCounterItem() {
-        return justUsedCounterItem;
-    }
-
-    /**
-     * Sets the status of whether a counter item was just used.
-     * @param state The new status.
-     */
-    public void setJustUsedCounterItem(boolean state) {
-        this.justUsedCounterItem = state;
     }
 
     /**

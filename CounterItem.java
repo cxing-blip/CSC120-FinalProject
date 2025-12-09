@@ -17,7 +17,6 @@ public class CounterItem extends Item {
     @Override
     public String use(Player player, Game game) {
         player.getInventory().remove(this);
-        player.setJustUsedCounterItem(true);
 
         if (player.getCurrentRoom().equals(game.getBoxGirl().getCurrentRoom())) {
             game.getBoxGirl().randomMove(game);

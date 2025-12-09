@@ -12,8 +12,9 @@ public class BoxGirl {
      * Constructs a new BoxGirl.
      * @param startRoom The room where the Box Girl starts (e.g., Basement).
      */
-    public BoxGirl(Room startRoom) {
+    public BoxGirl(Room startRoom, Box startBox) {
         this.currentRoom = startRoom;
+        this.hiddenInBox = startBox;
         this.unlockedSkills = new ArrayList<>();
     }
 
@@ -23,11 +24,6 @@ public class BoxGirl {
      * @param game The main game instance.
      */
     public void checkPassiveTriggers(Player player, Game game) {
-        if (player.isJustUsedCounterItem()) {
-            player.setJustUsedCounterItem(false);
-            System.out.println(" CALM ENVIRONMENT! The item you used temporarily deterred the evil presence.");
-            return;
-        }
 
         if (!unlockedSkills.isEmpty() && random.nextDouble() < 0.3) {
             Manuscript skill = unlockedSkills.get(random.nextInt(unlockedSkills.size()));
@@ -36,6 +32,10 @@ public class BoxGirl {
         }
 
     this.randomMove(game);
+
+        if (player.getCurrentRoom() == currentRoom) {
+            System.out.println("You sense nothing unusual... but something might be hiding nearby.");
+        }
     }
 
     /**
@@ -56,19 +56,18 @@ public class BoxGirl {
         Room dest = possibleMoves.get(random.nextInt(possibleMoves.size()));
         this.currentRoom = dest;
 
-        if (random.nextDouble() < 0.4) {
-            List<Box> unopened = new ArrayList<>();
-            for (Box b : dest.getBoxes()) {
-                if (!b.isOpen() && b.getHiddenOccupant() == null) unopened.add(b);
-            }
-
-            if (!unopened.isEmpty()) {
-                Box chosen = unopened.get(random.nextInt(unopened.size()));
-                chosen.setHiddenOccupant(this);
-                this.hiddenInBox = chosen;
-                System.out.println("You sense nothing unusual... but something might be hiding nearby.");
-            }
+        List<Box> unopened = new ArrayList<>();
+        for (Box b : dest.getBoxes()) {
+            if (!b.isOpen() && b.getHiddenOccupant() == null) 
+                unopened.add(b);
         }
+
+        if (!unopened.isEmpty()) {
+            Box chosen = unopened.get(random.nextInt(unopened.size()));
+            chosen.setHiddenOccupant(this);
+            this.hiddenInBox = chosen;
+        }
+    
     }
 
     /**
