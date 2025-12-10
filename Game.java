@@ -137,7 +137,7 @@ public class Game {
     private void handleMove() {
         Room current = player.getCurrentRoom();
 
-        System.out.println("Enter movement direction (e.g.: NORTH, SOUTH, UP, BASEMENT):");
+        System.out.println("Enter movement direction (e.g.: NORTH, SOUTH, EAST, WEST, UP, DOWN):");
         String direction = scanner.nextLine().toUpperCase().trim();
 
         Room nextRoom = current.getNeighbor(direction);
@@ -170,9 +170,6 @@ public class Game {
             return;
         }
 
-        /**
-         * Handles the player's action of using an item from their inventory.
-         */
         System.out.println("Enter the ID of the box to open:");
         try {
             int boxId = Integer.parseInt(scanner.nextLine().trim());
@@ -216,7 +213,7 @@ public class Game {
             return;
         }
 
-        System.out.println("YOUR ITEMS：");
+        System.out.println("YOUR ITEMS: ");
         for (int i = 0; i < inventory.size(); i++) {
             System.out.println((i + 1) + ". " + inventory.get(i).getName());
         }

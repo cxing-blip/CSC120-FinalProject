@@ -21,7 +21,7 @@ public class BoxGirlWeakness extends Item {
             return "You currently have only " + weakCount + " weakness item(s). You need 2 to perform the exorcism.";
         }
 
-        String roomName = player.getCurrentRoom().getName();
+        String roomName = player.getCurrentRoom().getFeatureItem();
         if (!roomName.contains("Miss Mary") && !roomName.contains("Corpse")) {
             return "You are not in the correct room for exorcism. Find the source of her resentment (Miss Mary's/Corpse Room).";
         }

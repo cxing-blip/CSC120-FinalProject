@@ -53,7 +53,7 @@ Enter one of the commands below on your turn.
 	- "Seeping Walls (Corpse Location)" — a hint for the Corpse location
 	- "Rocking Chair (Hidden Exit)" — is used to identify the Hidden Exit room
 
-- Movement directions are the connection keys in each room (`NORTH`, `SOUTH`, `EAST`, `WEST`, `UP`, `DOWN`, `BASEMENT`, `UPPER`, etc.).
+- Movement directions are the connection keys in each room (`NORTH`, `SOUTH`, `EAST`, `WEST`, `UP`, `DOWN`).
 
 
 4. Victory conditions and tips
@@ -62,11 +62,11 @@ There are two ways to win the game:
 
 1) ESCAPE VICTORY
 	 - Requirement: Collect 3 `Password` items and be at the Hidden Exit room (the room whose feature contains "Hidden Exit").
-	 - How to trigger: Use a `Password` while in that room. The `Password.use()` method checks `player.countItemOfType(Password.class)` and `player.getCurrentRoom().getFeatureItem().contains("Hidden Exit")`.
+	 - How to trigger: Use any of the 3 `Password` items that you have collected while in that room.
 
 2) EXORCISM VICTORY
 	 - Requirement: Collect at least 2 `BoxGirlWeakness` items and be in a special room (Miss Mary's room or the Corpse location).
-	 - How to trigger: Use a `BoxGirlWeakness` while in a room where `room.getName()` contains "Miss Mary" or "Corpse". The `BoxGirlWeakness.use()` method performs exactly this check.
+	 - How to trigger: Use any of 2 (or more) `BoxGirlWeakness` items that you have collected while in that room.
 
 
 5. Example play session (short)

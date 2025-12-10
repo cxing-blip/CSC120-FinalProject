@@ -25,6 +25,7 @@ public class Player {
         this.inventory.add(item);
         item.setObtained(true);
         System.out.println("Result: Obtained: " + item.getName());
+        System.out.println(item.getDescription());
     }
 
     /**

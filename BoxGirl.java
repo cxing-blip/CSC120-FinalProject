@@ -31,10 +31,10 @@ public class BoxGirl {
             this.activateSkill(skill.getSkillName(), player, game);
         }
 
-    this.randomMove(game);
-
         if (player.getCurrentRoom() == currentRoom) {
             System.out.println("You sense nothing unusual... but something might be hiding nearby.");
+        } else {
+            this.randomMove(game);
         }
     }
 
