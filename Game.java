@@ -21,15 +21,30 @@ public class Game {
      * Initializes the game state and starts the main game loop.
      */
     public void start() {
-        initializeGame();
 
         // Game Background and Goal
-        System.out.println("Welcome to THE BOX GIRL");
-        System.out.println("BACKGROUND: You have been trapped inside a haunted Japanese mansion by the 'Box Girl', a monstrous entity concealed within a box.");
-        System.out.println("GOAL: Escape before she catches you. You can achieve victory in one of two ways:");
-        System.out.println("  1. ESCAPE: Find 3 Passwords and use them at the Hidden Exit location.");
-        System.out.println("  2. EXORCISE: Find 2 Weakness items and use them in a special room (Miss Mary's or Corpse location).");
-        System.out.println("-------------------------------------");
+        System.out.println(
+            "-----------------------------------------------------------" +
+            "\nPast midnight, you step into an abandoned old villa—a place long swallowed by dust, silence, and things better left forgotten.\n" +
+            "Splintered wooden boards and half-rotted suitcases lie scattered across the floor.\n" +
+            "A faint, sickly-sweet smell seeps through the dark halls.\n" +
+            "Local whispers once said the discarded boxes here would awaken after nightfall—\n" +
+            "that they speak in the voices of past visitors…\n" +
+            "and that the creatures wearing those voices, known as boxgirls, still linger in the shadows.\n" +
+            "\n" +
+            "You feel the floor tremble softly beneath your feet.\n" +
+            "Something has noticed your presence.\n" +
+            "The villa is watching.\n" +
+            "\n" +
+            "HOW TO WIN: \n" +
+            "1. Find three passwords:\n" +
+            "Only by collecting all three passwords can you unlock the hidden exit and escape this villa.\n" +
+            "\n" +
+            "2. Defeat:\n" +
+            "Discover at least two weak points of the boxgirl, and carry them to the room where Miss Mary or the corpse is located in order to defeat it."
+        );
+
+        initializeGame();
         System.out.println("You are currently in the " + player.getCurrentRoom().getName() + ".");
 
         while (!isGameOver) {

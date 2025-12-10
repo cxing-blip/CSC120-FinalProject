@@ -113,11 +113,11 @@ public class GameMap {
     }
 
     /**
-     * Prints a simple ASCII map of the grid layout to the console.
+     * Prints a simple map of the grid layout to the console.
      */
     private void printAsciiMap() {
         int cols = mapGrid[0].length;
-        System.out.println("\n------------------------ ASCII MAP ------------------------");
+        System.out.println("\n------------------------ VILLA MAP ------------------------");
         for (int x = 0; x < size; x++) {
             StringBuilder line = new StringBuilder();
             for (int y = 0; y < cols; y++) {
