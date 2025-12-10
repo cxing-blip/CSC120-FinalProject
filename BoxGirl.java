@@ -36,47 +36,71 @@ public class BoxGirl {
         if (player.getCurrentRoom() == currentRoom) {
             System.out.println("You sense nothing unusual... but something might be hiding nearby.");
         } else {
-            this.randomMove(game, player);
+            this.randomMove(game, player, 5);
         }
     }
 
     /**
-     * Moves the Box Girl to a random adjacent room.
+     * Attempts to hide the Box Girl in an unopened box within the specified room.
+     * @param room The room to attempt hiding in.
+     * @return true if successfully hid in a box, false otherwise.
      */
+    private boolean tryHideInBox(Room room) {
+        List<Box> unopened = new ArrayList<>();
+        for (Box b : room.getBoxes()) {
+            if (!b.isOpen() && b.getHiddenOccupant() == null) {
+                unopened.add(b);
+            }
+        }
+
+        if (unopened.isEmpty()) return false;
+
+        Box chosen = unopened.get(random.nextInt(unopened.size()));
+        chosen.setHiddenOccupant(this);
+        this.hiddenInBox = chosen;
+        return true;
+    }
+
     /**
-     * Moves the Box Girl to a random adjacent room. She may choose to hide in an unopened box in the destination.
+     * Moves the Box Girl to a random adjacent room, or possibly to the player's room. She will attempt to hide in a box there.
+     * @param game The main game instance.
+     * @param player The player instance.
+     * @param attemptsLeft Number of attempts left to find a hiding spot (to avoid infinite recursion).
      */
-    public void randomMove(Game game, Player player) {
+    public void randomMove(Game game, Player player, int attemptsLeft) {
+
+        if (attemptsLeft == 0) {
+        handleNoBoxFound(game, player);
+        return;
+    }
         if (this.hiddenInBox != null) {
             this.hiddenInBox.clearHiddenOccupant();
             this.hiddenInBox = null;
         }
 
-        if(random.nextDouble() < 0.3) {
+        if (random.nextDouble() < 0.3) {
             this.currentRoom = player.getCurrentRoom();
         } else {
-            List<Room> possibleMoves = new ArrayList<>(currentRoom.getConnections().values());
+            List<Room> possibleMoves =
+                new ArrayList<>(currentRoom.getConnections().values());
             if (possibleMoves.isEmpty()) return;
 
-            Room destinationRoom = possibleMoves.get(random.nextInt(possibleMoves.size()));
-            this.currentRoom = destinationRoom;
-
-            List<Box> unopened = new ArrayList<>();
-            for (Box b : destinationRoom.getBoxes()) {
-                if (!b.isOpen() && b.getHiddenOccupant() == null) 
-                    unopened.add(b);
-            }
-
-            if (!unopened.isEmpty()) {
-                Box chosen = unopened.get(random.nextInt(unopened.size()));
-                chosen.setHiddenOccupant(this);
-                this.hiddenInBox = chosen;
-            } else {
-                randomMove(game, player);
-            }
+            this.currentRoom = possibleMoves.get(random.nextInt(possibleMoves.size()));
         }
-    
+
+        if (!tryHideInBox(this.currentRoom)) {
+            randomMove(game, player, attemptsLeft - 1);
+        }
     }
+
+    /**
+     * The method that handles the situation when the randomMove method did not find any room with unopned boxes
+     * @param game
+     * @param player
+     */
+    private void handleNoBoxFound(Game game, Player player) {
+    // The Box Girl rests without doing anything
+}
 
     /**
      * Executes the effect of a specific unlocked skill.
