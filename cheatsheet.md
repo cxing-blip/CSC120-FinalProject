@@ -7,7 +7,7 @@ Enter one of the commands below on your turn.
 
 - move
 	- Description: Move to a connected room.
-	- Usage: Type `move` then enter a direction when prompted (e.g. `NORTH`, `SOUTH`, `UP`, `DOWN`, `BASEMENT`, `UPPER`).
+	- Usage: Type `move` then enter a direction when prompted (`NORTH`, `SOUTH`, `EAST`, `WEST`, `UP`, `DOWN`).
 	- Example:
 		- move
 		- NORTH
@@ -15,13 +15,12 @@ Enter one of the commands below on your turn.
 - open box
 	- Description: Open an unopened box in the current room.
 	- Usage: Type `open box`, see the list of unopened box IDs, then enter the numeric ID to open.
-	- Notes: Some boxes contain Items (Passwords, Weaknesses, Manuscripts, CounterItems). Manuscripts auto-activate the Box Girl's skill.
+	- Notes: Some boxes contain Items (Passwords, Weaknesses, Manuscripts, CounterItems). Manuscripts auto-activate the Box Girl's skill, and then disappears.
 
 - use item
 	- Description: Use an item from your inventory.
 	- Usage: Type `use item`, the game lists your inventory, then enter the name of the item to use (e.g., `Matches`, `Password-A`).
 	- Behavior: Each item has a class-defined `use()` behavior. Some uses may end the game (victory), move the Box Girl, or alter the map.
-
 
 
 2. Inventory & Item types (what they do)
@@ -69,9 +68,9 @@ There are two ways to win the game:
 	 - How to trigger: Use any of 2 (or more) `BoxGirlWeakness` items that you have collected while in that room.
 
 
-5. Example play session (short)
+5. Example play session
 
 1) Game prints starting room: "You are currently in the First Floor Hall."
 2) Player types: `move` then `NORTH` → player moves rooms.
 3) Player types: `open box` → chooses a box ID and may receive an item.
-4) Player types: `use item` → chooses `Matches` (CounterItem) to ward off the Box Girl.
+4) Player types: `use item` → chooses `Rope` (CounterItem) to expel the Box Girl from your current room.
