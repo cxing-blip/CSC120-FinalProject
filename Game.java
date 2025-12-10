@@ -2,6 +2,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.io.IOException;
 
 public class Game {
     private Player player;
@@ -119,7 +122,7 @@ public class Game {
         player.getCurrentRoom().describe();
 
         System.out.println("\n YOUR TURN");
-        System.out.println("Choose action: [move] / [open box] / [use item]");
+        System.out.println("Choose action: [move] / [open box] / [use item] / [help]");
         String action = scanner.nextLine().toLowerCase().trim();
 
         switch (action) {
@@ -132,9 +135,24 @@ public class Game {
             case "use item":
                 handleUseItem();
                 break;
+            case "help":
+                printHelp();
+                break;
             default:
                 System.out.println("Action failed: Invalid command. Turn lost.");
                 break;
+        }
+    }
+
+    /**
+     * Print cheatsheet.md contents to the console. Falls back to a short help message on error.
+     */
+    private void printHelp() {
+        try {
+            String content = Files.readString(Paths.get("cheatsheet.md"));
+            System.out.println("\n--- HELP ---\n" + content + "\n--- END HELP ---\n");
+        } catch (IOException e) {
+            System.out.println("Help file not available. Short help:\n- move\n- open box\n- use item\n");
         }
     }
     /**
