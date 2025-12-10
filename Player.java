@@ -70,6 +70,19 @@ public class Player {
     }
 
     /**
+     * Removes an item from the player's inventory by reference.
+     * @param item The item to remove.
+     * @return True if removed, false if not found.
+     */
+    public boolean removeItem(Item item) {
+        boolean removed = this.inventory.remove(item);
+        if (removed) {
+            item.setObtained(false);
+        }
+        return removed;
+    }
+
+    /**
      * @return The main game instance.
      */
     public Game getGame() {

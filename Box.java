@@ -82,4 +82,22 @@ public class Box {
     public Item getContent() {
         return content;
     }
+
+    /**
+     * Put an item into this box. Only allowed when the box is currently open.
+     * The box will be closed after receiving the item (unless the box contains a hidden occupant).
+     * @param item The item to place into the box.
+     * @return True if the item was successfully placed, false otherwise.
+     */
+    public boolean putItem(Item item) {
+        if (!isOpen) {
+            System.out.println("Action failed: The box is closed.");
+            return false;
+        }
+
+        this.content = item;
+        // After placing an item, attempt to close the box so it becomes a reversible move.
+        this.close();
+        return true;
+    }
 }

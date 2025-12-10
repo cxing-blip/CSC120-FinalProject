@@ -18,6 +18,11 @@ Enter one of the commands below on your turn.
 	- Usage: Type `open box`, see the list of unopened box IDs, then enter the numeric ID to open.
 	- Notes: Some boxes contain Items (Passwords, Weaknesses, Manuscripts, CounterItems). Manuscripts auto-activate the Box Girl's skill, and then disappears.
 
+- put item
+	- Description: Place an item from your inventory into an already-opened box in the current room. This action consumes your turn.
+	- Usage: Type `put item`, choose an opened box ID and then enter the name of an item from your inventory to place inside.
+	- Notes: After placing an item the box will be closed (so the move is reversible: you can put items back into boxes you opened earlier).
+
 - use item
 	- Description: Use an item from your inventory.
 	- Usage: Type `use item`, the game lists your inventory, then enter the name of the item to use (e.g., `Matches`, `Password-A`).

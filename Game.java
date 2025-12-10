@@ -125,7 +125,7 @@ public class Game {
         player.getCurrentRoom().describe();
 
         System.out.println("\n YOUR TURN");
-        System.out.println("Choose action: [move] / [open box] / [use item] / [help]");
+        System.out.println("Choose action: [move] / [open box] / [use item] / [put item] / [help]");
         String action = scanner.nextLine().toLowerCase().trim();
 
         switch (action) {
@@ -134,6 +134,9 @@ public class Game {
                 break;
             case "open box":
                 handleOpenBox();
+                break;
+            case "put item":
+                handlePutItem();
                 break;
             case "use item":
                 handleUseItem();
@@ -144,6 +147,74 @@ public class Game {
             default:
                 System.out.println("Action failed: Invalid command. Turn lost.");
                 break;
+        }
+    }
+
+    /**
+     * Handles putting an item from the player's inventory into an already-opened box in the current room.
+     * This action consumes the player's turn. After placing the item the box will be closed (unless it contains a hidden occupant).
+     */
+    private void handlePutItem() {
+        List<Box> boxes = player.getCurrentRoom().getBoxes();
+        List<Box> openedBoxes = new ArrayList<>();
+
+        System.out.print("Opened boxes IDs: ");
+        for (Box box : boxes) {
+            if (box.isOpen()) {
+                openedBoxes.add(box);
+                System.out.print(box.getId() + " ");
+            }
+        }
+        System.out.println();
+
+        if (openedBoxes.isEmpty()) {
+            System.out.println("Action failed: There are no opened boxes in this room to put items into.");
+            return;
+        }
+
+        List<Item> inventory = player.getInventory();
+        if (inventory.isEmpty()) {
+            System.out.println("Action failed: Your inventory is empty.");
+            return;
+        }
+
+        System.out.println("YOUR ITEMS: ");
+        for (int i = 0; i < inventory.size(); i++) {
+            System.out.println((i + 1) + ". " + inventory.get(i).getName());
+        }
+
+        System.out.println("Enter the ID of the opened box to put the item into:");
+        try {
+            int boxId = Integer.parseInt(scanner.nextLine().trim());
+            Box targetBox = boxes.stream()
+                    .filter(b -> b.getId() == boxId && b.isOpen())
+                    .findFirst()
+                    .orElse(null);
+
+            if (targetBox == null) {
+                System.out.println("Action failed: Invalid box ID or the box is not open.");
+                return;
+            }
+
+            System.out.println("Enter the name of the item to put into the box:");
+            String itemName = scanner.nextLine().trim();
+            Item itemToPut = getItemFromInventoryByName(itemName);
+
+            if (itemToPut == null) {
+                System.out.println("Action failed: You do not have that item.");
+                return;
+            }
+
+            boolean placed = targetBox.putItem(itemToPut);
+            if (placed) {
+                player.removeItem(itemToPut);
+                System.out.println("Result: You placed " + itemToPut.getName() + " into box " + targetBox.getId() + ". The box is now closed.");
+            } else {
+                System.out.println("Action failed: Could not place the item into the box.");
+            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Action failed: Invalid input. Please enter a number.");
         }
     }
 
