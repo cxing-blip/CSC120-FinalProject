@@ -1,3 +1,6 @@
+/**
+ * Represents a manuscript item that unlocks a new skill for the Box Girl.
+ */
 public class Manuscript extends Item {
     private String skillName;
 

@@ -1,3 +1,6 @@
+/**
+ * Abstract base class for all items in the game.
+ */
 public abstract class Item {
     private String name;
     private String description;

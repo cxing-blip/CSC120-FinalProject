@@ -1,7 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
-
+/**
+ * Represents the BoxGirl that moves around the mansion and interacts with the player.
+ */
 public class BoxGirl {
     private Room currentRoom;
     private List<Manuscript> unlockedSkills;

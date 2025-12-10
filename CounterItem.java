@@ -1,3 +1,6 @@
+/**
+ * Represents a counter item that can be used to expel the Box Girl from the player's current room.
+ */
 public class CounterItem extends Item {
 
     /**

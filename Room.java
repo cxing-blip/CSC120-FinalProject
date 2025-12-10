@@ -4,6 +4,9 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collections;
 
+/**
+ * Represents a room in the mansion, containing boxes and connections to other rooms.
+ */
 public class Room {
     private String name;
     private int x, y;

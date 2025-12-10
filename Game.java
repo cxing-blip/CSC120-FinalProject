@@ -6,6 +6,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.io.IOException;
 
+/**
+ * Main game class that initializes and runs the mansion escape game.
+ */
 public class Game {
     private Player player;
     private GameMap map;

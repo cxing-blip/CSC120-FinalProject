@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Arrays;
 
+/**
+ * Represents the mansion map, including rooms and their connections.
+ */
 public class GameMap {
     private Map<String, Room> allRooms;
     private Room[][] mapGrid;

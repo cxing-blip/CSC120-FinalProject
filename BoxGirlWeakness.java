@@ -1,3 +1,6 @@
+/**
+ * Represents a weakness item of the Box Girl that can be used to exorcise her.
+ */
 public class BoxGirlWeakness extends Item {
 
     /**

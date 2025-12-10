@@ -1,6 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Represents the player navigating through the mansion.
+ */
 public class Player {
     private Room currentRoom;
     private List<Item> inventory;

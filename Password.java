@@ -1,3 +1,6 @@
+/**
+ * Represents a password item that can be used to escape the mansion.
+ */
 public class Password extends Item {
 
     /**

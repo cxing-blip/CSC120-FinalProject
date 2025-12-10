@@ -1,3 +1,6 @@
+/**
+ * Represents a box that can contain an item and potentially hide the Box Girl.
+ */
 public class Box {
     private static int nextId = 1;
     private int id;
