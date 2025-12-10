@@ -34,7 +34,7 @@ public class BoxGirl {
         if (player.getCurrentRoom() == currentRoom) {
             System.out.println("You sense nothing unusual... but something might be hiding nearby.");
         } else {
-            this.randomMove(game);
+            this.randomMove(game, player);
         }
     }
 
@@ -44,28 +44,34 @@ public class BoxGirl {
     /**
      * Moves the Box Girl to a random adjacent room. She may choose to hide in an unopened box in the destination.
      */
-    public void randomMove(Game game) {
+    public void randomMove(Game game, Player player) {
         if (this.hiddenInBox != null) {
             this.hiddenInBox.clearHiddenOccupant();
             this.hiddenInBox = null;
         }
 
-        List<Room> possibleMoves = new ArrayList<>(currentRoom.getConnections().values());
-        if (possibleMoves.isEmpty()) return;
+        if(random.nextDouble() < 0.3) {
+            this.currentRoom = player.getCurrentRoom();
+        } else {
+            List<Room> possibleMoves = new ArrayList<>(currentRoom.getConnections().values());
+            if (possibleMoves.isEmpty()) return;
 
-        Room dest = possibleMoves.get(random.nextInt(possibleMoves.size()));
-        this.currentRoom = dest;
+            Room destinationRoom = possibleMoves.get(random.nextInt(possibleMoves.size()));
+            this.currentRoom = destinationRoom;
 
-        List<Box> unopened = new ArrayList<>();
-        for (Box b : dest.getBoxes()) {
-            if (!b.isOpen() && b.getHiddenOccupant() == null) 
-                unopened.add(b);
-        }
+            List<Box> unopened = new ArrayList<>();
+            for (Box b : destinationRoom.getBoxes()) {
+                if (!b.isOpen() && b.getHiddenOccupant() == null) 
+                    unopened.add(b);
+            }
 
-        if (!unopened.isEmpty()) {
-            Box chosen = unopened.get(random.nextInt(unopened.size()));
-            chosen.setHiddenOccupant(this);
-            this.hiddenInBox = chosen;
+            if (!unopened.isEmpty()) {
+                Box chosen = unopened.get(random.nextInt(unopened.size()));
+                chosen.setHiddenOccupant(this);
+                this.hiddenInBox = chosen;
+            } else {
+                randomMove(game, player);
+            }
         }
     
     }

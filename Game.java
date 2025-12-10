@@ -7,6 +7,7 @@ public class Game {
     private Player player;
     private GameMap map;
     private BoxGirl boxGirl;
+    private BoxGirl boxGirl2;
     private Scanner scanner = new Scanner(System.in);
     private boolean isGameOver = false;
 
@@ -52,6 +53,9 @@ public class Game {
             if (isGameOver) break;
 
             boxGirl.checkPassiveTriggers(player, this);
+            if (boxGirl2 != null) {
+                boxGirl2.checkPassiveTriggers(player, this);
+            }
         }
 
         System.out.println("\n GAME OVER");
@@ -84,12 +88,14 @@ public class Game {
         allItems.add(new CounterItem("Rope", "Can temporarily restrain the Box Girl."));
         allItems.add(new CounterItem("Axe", "Can temporarily frighten the Box Girl."));
 
-        // 5 Manuscripts
-        allItems.add(new Manuscript("Manuscript-Beside", "It is right beside you", "Right Beside You"));
+        // 7 Manuscripts
+        allItems.add(new Manuscript("Manuscript-Beside", "Box Girl is right beside you", "Right Beside You"));
+        allItems.add(new Manuscript("Manuscript-Beside", "Box Girl is right beside you", "Right Beside You"));
         allItems.add(new Manuscript("Manuscript-Move", "Box Girl moves freely on the same floor", "Moving Around"));
         allItems.add(new Manuscript("Manuscript-Door", "Door cannot be passed", "Locked Door"));
         allItems.add(new Manuscript("Manuscript-Open", "Forces player to open a box", "I Want to Open It"));
         allItems.add(new Manuscript("Manuscript-Take", "Box Girl steals an item", "Give It to Me"));
+        allItems.add(new Manuscript("Manuscript-TwinSister", "You released Box Girl's sister! Now there are 2 box girls", "Box Girl"));
 
         // 4 Empty Box Markers
         for(int i = 0; i < 4; i++) {
@@ -190,8 +196,13 @@ public class Game {
                 if (content == null || content.getName().equals("Empty Box")) {
                     System.out.println("Result: The box is empty.");
                 } else if (content instanceof Manuscript) {
-                    System.out.println("Result: RESENTMENT BURST. A " + content.getName() + " was found and activated the Box Girl's power.");
-                    ((Manuscript) content).activateSkill(this);
+                    if (content.getName()=="Box Girl") {
+                        Box startBox2 = map.getRoom("Basement").getBoxes().get(2);
+                        boxGirl2 = new BoxGirl(map.getRoom("Basement"), startBox2);
+                    } else {
+                        System.out.println("Result: RESENTMENT BURST. A " + content.getName() + " was found and activated the Box Girl's power. The manuscript disappeared in the air.");
+                        ((Manuscript) content).activateSkill(this);
+                    }
                 } else {
                     player.addItem(content);
                 }
