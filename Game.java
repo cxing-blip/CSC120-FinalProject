@@ -77,10 +77,12 @@ public class Game {
 
         List<Item> allItems = new ArrayList<>();
 
-        // 3 Passwords
+        // 5 Passwords
         allItems.add(new Password("Password-A", "A piece of paper with numbers."));
         allItems.add(new Password("Password-B", "A piece of paper with numbers."));
         allItems.add(new Password("Password-C", "A piece of paper with numbers."));
+        allItems.add(new Password("Password-D", "A piece of paper with numbers."));
+        allItems.add(new Password("Password-E", "A piece of paper with numbers."));
 
         // 5 Box Girl Weaknesses
         allItems.add(new BoxGirlWeakness("White Camellia", "A rare white camellia. One of the Box Girl's weaknesses."));
@@ -103,8 +105,8 @@ public class Game {
         allItems.add(new Manuscript("Manuscript-Take", "Box Girl steals an item", "Give It to Me"));
         allItems.add(new Manuscript("Manuscript-TwinSister", "You released Box Girl's sister! Now there are 2 box girls", "Box Girl"));
 
-        // 4 Empty Box Markers
-        for(int i = 0; i < 4; i++) {
+        // 7 Empty Box Markers
+        for(int i = 0; i < 7; i++) {
             allItems.add(new Item("Empty Box", "A placeholder for an empty box.") {
                 @Override public String use(Player p, Game g) { return "This box is empty."; }
             });
