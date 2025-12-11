@@ -22,8 +22,12 @@ public class CounterItem extends Item {
         player.getInventory().remove(this);
 
         if (player.getCurrentRoom().equals(game.getBoxGirl().getCurrentRoom())) {
-            game.getBoxGirl().randomMove(game, player, 5);
-            return getName() + "'s power startled the Box Girl, and she fled your room!";
+            boolean moved = game.getBoxGirl().randomMove(game, player, 7);
+            if (moved) {
+                return getName() + "'s power startled the Box Girl, and she fled your room!";
+            } else {
+                return getName() + "'s power failed to expel the Box Girl — she remained nearby.";
+            }
         } else {
             return "The aura of the " + getName() + " calms the atmosphere. You feel safe for now.";
         }

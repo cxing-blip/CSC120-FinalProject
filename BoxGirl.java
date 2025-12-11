@@ -27,7 +27,7 @@ public class BoxGirl {
      */
     public void checkPassiveTriggers(Player player, Game game) {
 
-        if (!unlockedSkills.isEmpty() && random.nextDouble() < 0.3) {
+        if (!unlockedSkills.isEmpty() && random.nextDouble() < 0.15) {
             Manuscript skill = unlockedSkills.get(random.nextInt(unlockedSkills.size()));
             System.out.println("\n !!!! Resentment explodes around you! " + skill.getName() + " is activated!");
             this.activateSkill(skill.getSkillName(), player, game);
@@ -36,7 +36,7 @@ public class BoxGirl {
         if (player.getCurrentRoom() == currentRoom) {
             System.out.println("You sense nothing unusual... but something might be hiding nearby.");
         } else {
-            this.randomMove(game, player, 5);
+            this.randomMove(game, player, 7);
         }
     }
 
@@ -67,30 +67,32 @@ public class BoxGirl {
      * @param player The player instance.
      * @param attemptsLeft Number of attempts left to find a hiding spot (to avoid infinite recursion).
      */
-    public void randomMove(Game game, Player player, int attemptsLeft) {
+    public boolean randomMove(Game game, Player player, int attemptsLeft) {
 
         if (attemptsLeft == 0) {
-        handleNoBoxFound(game, player);
-        return;
-    }
+            handleNoBoxFound(game, player);
+            return false;
+        }
         if (this.hiddenInBox != null) {
             this.hiddenInBox.clearHiddenOccupant();
             this.hiddenInBox = null;
         }
 
-        if (random.nextDouble() < 0.3) {
+        if (random.nextDouble() < 0.15) {
             this.currentRoom = player.getCurrentRoom();
         } else {
             List<Room> possibleMoves =
                 new ArrayList<>(currentRoom.getConnections().values());
-            if (possibleMoves.isEmpty()) return;
+            if (possibleMoves.isEmpty()) return false;
 
             this.currentRoom = possibleMoves.get(random.nextInt(possibleMoves.size()));
         }
 
         if (!tryHideInBox(this.currentRoom)) {
-            randomMove(game, player, attemptsLeft - 1);
+            return randomMove(game, player, attemptsLeft - 1);
         }
+
+        return true;
     }
 
     /**
@@ -99,8 +101,8 @@ public class BoxGirl {
      * @param player
      */
     private void handleNoBoxFound(Game game, Player player) {
-    // The Box Girl rests without doing anything
-}
+    System.out.println("The Box Girl tried to find a place to hide but failed, so she stayed in her current location.");
+    }
 
     /**
      * Executes the effect of a specific unlocked skill.
