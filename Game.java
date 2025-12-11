@@ -83,11 +83,11 @@ public class Game {
         allItems.add(new Password("Password-C", "A piece of paper with numbers."));
 
         // 5 Box Girl Weaknesses
-        allItems.add(new BoxGirlWeakness("White Camellia", "A rare white camellia."));
-        allItems.add(new BoxGirlWeakness("Gasoline", "A small can of gasoline."));
-        allItems.add(new BoxGirlWeakness("Rusty Chain", "A rusty chain with a binding power."));
-        allItems.add(new BoxGirlWeakness("Weakness Fragment-1", "A fragment of a weakness."));
-        allItems.add(new BoxGirlWeakness("Weakness Fragment-2", "A fragment of a weakness."));
+        allItems.add(new BoxGirlWeakness("White Camellia", "A rare white camellia. One of the Box Girl's weaknesses."));
+        allItems.add(new BoxGirlWeakness("Gasoline", "A small can of gasoline. One of the Box Girl's weaknesses."));
+        allItems.add(new BoxGirlWeakness("Rusty Chain", "A rusty chain with a binding power. One of the Box Girl's weaknesses."));
+        allItems.add(new BoxGirlWeakness("Lighter", "One of the Box Girl's weaknesses."));
+        allItems.add(new BoxGirlWeakness("Old Scissor", "One of the Box Girl's weaknesses."));
 
         // 3 Counter Items
         allItems.add(new CounterItem("Matches", "Can temporarily frighten the Box Girl."));
