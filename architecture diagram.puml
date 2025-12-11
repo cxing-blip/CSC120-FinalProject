@@ -1,0 +1,150 @@
+@startuml architecture diagram
+
+' Classes and inheritance
+abstract class Item {
+  - name: String
+  - description: String
+  - isObtained: boolean
+  + use(player: Player, game: Game): String
+  + getName(): String
+  + getDescription(): String
+  + isObtained(): boolean
+  + setObtained(obtained: boolean)
+}
+
+class Password
+class BoxGirlWeakness
+class CounterItem
+class Manuscript {
+  - skillName: String
+  + activateSkill(game: Game)
+  + getSkillName(): String
+  + use(player: Player, game: Game): String
+}
+
+Item <|-- Password
+Item <|-- BoxGirlWeakness
+Item <|-- CounterItem
+Item <|-- Manuscript
+
+class Box {
+  - id: int
+  - isOpen: boolean
+  - content: Item
+  - hiddenOccupant: BoxGirl
+  + open(): Item
+  + setContent(content: Item)
+  + close()
+  + getHiddenOccupant(): BoxGirl
+  + setHiddenOccupant(bg: BoxGirl)
+  + clearHiddenOccupant()
+  + getId(): int
+  + isOpen(): boolean
+  + getContent(): Item
+  + putItem(item: Item): boolean
+}
+
+class Room {
+  - name: String
+  - x: int
+  - y: int
+  - boxes: List<Box>
+  - connections: Map<String,Room>
+  - featureItem: String
+  + describe()
+  + scrambleBoxes(resetOpen: boolean)
+  + addConnection(dir: String, room: Room)
+  + getNeighbor(dir: String): Room
+  + getBoxes(): List<Box>
+  + getConnections(): Map<String,Room>
+  + getFeatureItem(): String
+  + getName(): String
+}
+
+class GameMap {
+  - allRooms: Map<String,Room>
+  - mapGrid: Room[][]
+  - size: int
+  + generateRandomMap()
+  + distributeItems(allItems: List<Item>)
+  + getRoom(name: String): Room
+  + getAllBoxes(): List<Box>
+  - createRoom(name: String, x: int, y: int, feature: String): Room
+  - printAsciiMap()
+}
+
+class Player {
+  - currentRoom: Room
+  - inventory: List<Item>
+  - game: Game
+  + move(newRoom: Room)
+  + addItem(item: Item)
+  + countItemOfType(type: Class): int
+  + getCurrentRoom(): Room
+  + getInventory(): List<Item>
+  + removeItem(item: Item): boolean
+  + getGame(): Game
+}
+
+class BoxGirl {
+  - currentRoom: Room
+  - unlockedSkills: List<Manuscript>
+  - hiddenInBox: Box
+  - random: Random
+  + BoxGirl(startRoom: Room, startBox: Box)
+  + checkPassiveTriggers(player: Player, game: Game)
+  + randomMove(game: Game, player: Player, attemptsLeft: int): boolean
+  + activateSkill(name: String, player: Player, game: Game)
+  + unlockSkill(manuscript: Item)
+  + getCurrentRoom(): Room
+  + getHiddenInBox(): Box
+}
+
+class Game {
+  - player: Player
+  - map: GameMap
+  - boxGirl: BoxGirl
+  - boxGirl2: BoxGirl
+  - scanner: Scanner
+  - isGameOver: boolean
+  + main(args: String[])
+  + start()
+  + initializeGame()
+  + playerTurn()
+  + handleMove()
+  + handleOpenBox()
+  + handleUseItem()
+  + handlePutItem()
+  + printHelp()
+  + endGame(win: boolean, message: String)
+  + getMap(): GameMap
+  + getBoxGirl(): BoxGirl
+  + addItemToRandomBox(item: Item)
+  + getItemFromInventoryByName(name: String): Item
+}
+
+' Associations / relationships
+Game o-- Player
+Game o-- GameMap
+Game o-- BoxGirl
+Game o-- BoxGirl : optional (boxGirl2)
+
+Game --> Item : distributes
+Game --> Room : accesses via map
+
+GameMap o-- Room
+Room o-- Box
+Box --> Item : may contain
+Box --> BoxGirl : may hide (hiddenOccupant)
+
+Player --> Room : resides in
+Player o-- Item : owns (inventory)
+Player --> BoxGirl : interacts (e.g., counter items)
+
+BoxGirl --> Room : resides in / moves between
+BoxGirl --> Manuscript : unlocked via activateSkill/unlockSkill
+
+' Room-to-Room connections (bidirectional)
+Room --> Room : connections (NORTH/EAST/etc.)
+
+@enduml
