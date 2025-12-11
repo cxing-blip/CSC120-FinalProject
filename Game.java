@@ -113,9 +113,9 @@ public class Game {
         map.distributeItems(allItems);
 
         Room startRoom = map.getRoom("First Floor Hall");
-        Box startBox = map.getRoom("Basement").getBoxes().get(0);
+        Box startBox = map.getRoom("Second Floor Hall").getBoxes().get(0);
         player = new Player(startRoom, this);
-        boxGirl = new BoxGirl(map.getRoom("Basement"), startBox);
+        boxGirl = new BoxGirl(map.getRoom("Second Floor Hall"), startBox);
     }
 
     /**
@@ -288,9 +288,10 @@ public class Game {
                 if (content == null || content.getName().equals("Empty Box")) {
                     System.out.println("Result: The box is empty.");
                 } else if (content instanceof Manuscript) {
-                    if (content.getName()=="Box Girl") {
+                    if (content instanceof Manuscript && ((Manuscript) content).getSkillName().equalsIgnoreCase("Box Girl")) {
                         Box startBox2 = map.getRoom("Basement").getBoxes().get(2);
                         boxGirl2 = new BoxGirl(map.getRoom("Basement"), startBox2);
+                        System.out.println("Result: You have released the Box Girl's sister! Now there are two box girls.");
                     } else {
                         System.out.println("Result: RESENTMENT BURST. A " + content.getName() + " was found and activated the Box Girl's power. The manuscript disappeared in the air.");
                         ((Manuscript) content).activateSkill(this);

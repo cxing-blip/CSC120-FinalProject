@@ -17,6 +17,9 @@ public class BoxGirl {
     public BoxGirl(Room startRoom, Box startBox) {
         this.currentRoom = startRoom;
         this.hiddenInBox = startBox;
+        if (this.hiddenInBox != null) {
+            this.hiddenInBox.setHiddenOccupant(this);
+        }
         this.unlockedSkills = new ArrayList<>();
     }
 
@@ -37,6 +40,9 @@ public class BoxGirl {
             System.out.println("You sense nothing unusual... but something might be hiding nearby.");
         } else {
             this.randomMove(game, player, 7);
+            if (player.getCurrentRoom() == currentRoom) {
+                System.out.println("You sense nothing unusual... but something might be hiding nearby.");
+            }
         }
     }
 
